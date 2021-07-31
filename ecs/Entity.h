@@ -10,8 +10,8 @@
 
 class Entity {
 public:
-	template<std::derived_from<AComponent> T, typename... Args>
-	constexpr void AddComponent(Args&&... args) noexcept { AddComponent(std::make_unique<T>(std::forward<Args>(args)...)); }
+	template<std::derived_from<AComponent> T>
+	constexpr void AddComponent(auto&&... args) noexcept { AddComponent(std::make_unique<T>(std::forward<decltype(args)>(args)...)); }
 
 	template<std::derived_from<AComponent> T>
 	constexpr void RemoveComponent()     noexcept { RemoveComponent(T::ToEnum()); }
