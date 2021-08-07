@@ -16,6 +16,7 @@ public:
 		if (HasComponent<T>()) {
 			return;
 		}
+
 		auto component = std::make_unique<T>(std::forward<decltype(args)>(args)...);
 
 		component->SetEntity(this);
@@ -35,7 +36,8 @@ public:
 	constexpr void RemoveAllComponents() noexcept { m_components.clear(); }
 
 	template<std::derived_from<AComponent> T>
-	[[nodiscard]] constexpr T* GetComponent()  const noexcept { 
+	[[nodiscard]] 
+	constexpr T* GetComponent()  const noexcept { 
 		if (const auto index = HasComponent<T>()) {
 			return static_cast<T*>(m_components.at(index.value()).get());
 		}
@@ -45,7 +47,8 @@ public:
 	[[nodiscard]] const auto& GetComponents() const noexcept { return m_components; }
 
 	template<std::derived_from<AComponent> T>
-	[[nodiscard]] constexpr std::optional<uint32_t> HasComponent() const noexcept {
+	[[nodiscard]] 
+	constexpr std::optional<uint32_t> HasComponent() const noexcept {
 		namespace rn = std::ranges;
 		
 		const auto typeId = typeid(decltype(std::declval<T>())).hash_code();
