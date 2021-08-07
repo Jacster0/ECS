@@ -47,9 +47,9 @@ public:
 	template<std::derived_from<AComponent> T>
 	[[nodiscard]] constexpr std::optional<uint32_t> HasComponent() const noexcept {
 		namespace rn = std::ranges;
-
+		
 		const auto typeId = typeid(decltype(std::declval<T>())).hash_code();
-	    const auto lambda = [typeId](const auto& component) -> bool { return typeid(*component).hash_code() == typeId; };
+		const auto lambda = [typeId](const auto& component) -> bool { return typeid(*component).hash_code() == typeId; };
 
 		if (const auto iter = rn::find_if(m_components, lambda); iter != m_components.cend()) {
 			return std::distance(m_components.begin(), iter);
